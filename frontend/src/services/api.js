@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+// Base URL vers Render (sans /api à la fin si vos routes incluent déjà leurs propres préfixes)
 const baseURL = import.meta.env.VITE_API_URL || 'https://miramk.onrender.com';
 const KEY = 'mira_mk_session';
 
@@ -32,7 +33,8 @@ api.interceptors.response.use(
       original._retry = true;
       try {
         if (!refreshing) {
-          refreshing = axios.post(`${baseURL}/auth/refresh`, { refreshToken: s.refreshToken }).finally(() => { refreshing = null; });
+          const refreshUrl = `\({baseURL.replace(/\/\)/, '')}/auth/refresh`;
+          refreshing = axios.post(refreshUrl, { refreshToken: s.refreshToken }).finally(() => { refreshing = null; });
         }
         const { data } = await refreshing;
         session.set({ ...s, idToken: data.data.idToken, refreshToken: data.data.refreshToken });
@@ -52,7 +54,7 @@ export const unwrap = (promise) => promise.then((r) => r.data.data);
 export const errorMessage = (e) => {
   const d = e?.response?.data;
   if (Array.isArray(d?.error) && d.error.length) {
-    return `${d.message} — ${d.error.map((x) => x.message).join(' ; ')}`;
+    return `\({d.message} —\){d.error.map((x) => x.message).join(' ; ')}`;
   }
   return d?.message || (e?.code === 'ERR_NETWORK' ? 'Serveur injoignable. Vérifiez votre connexion.' : e?.message) || 'Une erreur est survenue';
 };
