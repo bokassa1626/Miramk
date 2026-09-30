@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Base URL vers Render (sans /api à la fin si vos routes incluent déjà leurs propres préfixes)
-const baseURL = import.meta.env.VITE_API_URL || 'https://miramk.onrender.com';
+const baseURL = import.meta.env.VITE_API_URL || 'https://miramk.onrender.com/api';
 const KEY = 'mira_mk_session';
 
 /**
