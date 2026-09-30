@@ -1,5 +1,6 @@
 'use strict';
 const express = require('express');
+const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 const { authenticate } = require('../middleware/auth');
 const { authorize } = require('../middleware/rbac');
@@ -21,6 +22,14 @@ const reports = require('../controllers/report.controller');
 const alerts = require('../controllers/alert.controller');
 const audit = require('../controllers/audit.controller');
 const settings = require('../controllers/settings.controller');
+
+// 1. Initialisation de l'application Express principale
+const app = express();
+
+// 2. Middlewares globaux indispensables pour Vercel
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 const router = express.Router();
 
@@ -119,7 +128,12 @@ router.post('/alerts/:id/acknowledge', authorize('alerts:read'), alerts.acknowle
 router.get('/audit', authorize('audit:read'), audit.list);
 
 /* ------------------------------------------------------------ PARAMÈTRES */
-router.get('/settings', settings.get); // informations société (utiles à tous les rôles pour les factures)
+router.get('/settings', settings.get);
 router.put('/settings', authorize('settings:write'), validate(v.settingsUpdate), settings.update);
 
-module.exports = router;
+// 3. Montage du routeur sur la racine /api et direct
+app.use('/api', router);
+app.use('/', router);
+
+// 4. Export de l'application Express pour Vercel (sans app.listen)
+module.exports = app;
