@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseURL = import.meta.env.VITE_API_URL || '/api';
+const baseURL = import.meta.env.VITE_API_URL || 'https://miramk.onrender.com';
 const KEY = 'mira_mk_session';
 
 /**
