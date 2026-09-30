@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { font-family: 'IBM Plex Sans', system-ui, sans-serif; }
+  body { @apply bg-steel-100 text-steel-900 antialiased; font-variant-numeric: tabular-nums; }
+  h1, h2, h3 { font-family: 'Bricolage Grotesque', system-ui, sans-serif; letter-spacing: -0.01em; }
+  :focus-visible { @apply outline outline-2 outline-offset-2; outline-color: #0284C7; }
+}
+
+@layer components {
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-md px-3.5 py-2 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-50; }
+  .btn-primary { @apply btn bg-brand-600 text-white hover:bg-brand-700; }
+  .btn-secondary { @apply btn border border-steel-300 bg-white text-steel-800 hover:bg-steel-50; }
+  .btn-danger { @apply btn border border-cure-600 bg-white text-cure-600 hover:bg-cure-50; }
+  .btn-ghost { @apply btn text-steel-600 hover:bg-steel-200; }
+  .btn-sm { @apply px-2.5 py-1.5 text-xs; }
+  .input { @apply min-h-10 w-full min-w-0 rounded-md border border-steel-300 bg-white px-3 py-2 text-sm text-steel-900 placeholder:text-steel-400 focus:border-brand-600 focus:outline-none focus:ring-1 focus:ring-brand-600 disabled:bg-steel-100; }
+  .label { @apply mb-1 block text-sm font-medium text-steel-700; }
+  .card { @apply rounded-lg border border-steel-200 bg-white; }
+  .th { @apply whitespace-nowrap px-4 py-2.5 text-left text-xs font-semibold text-steel-500; }
+  .td { @apply px-4 py-3 text-sm; }
+}
+
+@media (max-width: 640px) {
+  .input { font-size: 16px; }
+}
+
+/* Impression : seule la zone .print-area (facture, rapport) est imprimée */
+@media print {
+  body * { visibility: hidden; }
+  .print-area, .print-area * { visibility: visible; }
+  .print-area { position: absolute; left: 0; top: 0; width: 100%; border: 0 !important; box-shadow: none !important; }
+  .no-print { display: none !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
