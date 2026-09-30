@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import AppLayout from './layouts/AppLayout.jsx';
 import ProtectedRoute from './routes/ProtectedRoute.jsx';
 import { Loading } from './components/ui.jsx';
+import InstallPrompt from './components/InstallPrompt.jsx';
 
 const Login = lazy(() => import('./pages/Login.jsx'));
 const Dashboard = lazy(() => import('./pages/Dashboard.jsx'));
@@ -24,6 +25,8 @@ const NotFound = lazy(() => import('./pages/NotFound.jsx'));
 
 export default function App() {
   return (
+    <>
+    <InstallPrompt />
     <Suspense fallback={<div className="flex min-h-[40vh] items-center justify-center"><Loading label="Chargement de la page…" /></div>}>
     <Routes>
       <Route path="/login" element={<Login />} />
@@ -80,5 +83,6 @@ export default function App() {
       <Route path="*" element={<NotFound />} />
     </Routes>
     </Suspense>
+    </>
   );
 }

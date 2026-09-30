@@ -1,0 +1,21 @@
+{
+  "id": "/",
+  "name": "Boucherie Mira-Mk — Gestion",
+  "short_name": "Mira-Mk",
+  "description": "Gestion et contrôle de la Boucherie Mira-Mk",
+  "lang": "fr-CD",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#F5F7F8",
+  "theme_color": "#0284C7",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
